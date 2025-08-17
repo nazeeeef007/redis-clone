@@ -1,84 +1,152 @@
-💻 My Redis Clone
-A simple, fast, and reliable in-memory key-value store designed for student pet projects. This Redis-compatible clone provides a robust solution for caching and session management without the complexity of an enterprise-grade database.
+# 💻 My Redis Clone
 
-✨ Features
-Core Redis Commands: Supports essential commands like GET, SET, DEL, and EXPIRE.
+A simple, fast, and reliable in-memory key-value store designed for student projects.  
+This Redis-compatible clone provides a robust solution for caching and session management without the complexity of an enterprise-grade database.
 
-In-Memory Storage: Blazing fast data access with all data stored in RAM.
+---
 
-Thread-Safe: Uses an efficient sharding and locking mechanism to ensure safe concurrent access from multiple clients.
+## ✨ Features
 
-Lightweight & Easy to Use: Minimal dependencies and a simple setup process.
+- **Core Redis Commands:** Supports essential commands like `GET`, `SET`, `DEL`, and `EXPIRE`.  
+- **In-Memory Storage:** Blazing fast data access with all data stored in RAM.  
+- **Thread-Safe:** Efficient sharding and locking mechanism for safe concurrent access.  
+- **Lightweight & Easy to Use:** Minimal dependencies and simple setup.
 
-🚀 Getting Started
-These instructions will get you a copy of the project up and running on your local machine.
+---
 
-Prerequisites
-To run this server, you will need:
+## 🚀 Getting Started
 
-Node.js (version 14 or higher)
+Follow these instructions to run the project locally.
 
-npm
+### Prerequisites
 
-Installation
-Clone the repository:
+- Node.js (v14 or higher)  
+- npm
 
+### Installation
+
+```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
-
-Install dependencies:
-
 npm install
-
-Run the server:
-
 npm start
-
 The server will start and listen for client connections on localhost:6379.
 
-🔧 Usage in Your Application
-To use this Redis clone in your own CRUD application, you'll need a Redis client library for your programming language. Here is a simple example using the popular node-redis library.
+🔧 Client Usage Examples
+You can use this Redis clone in your applications with a Redis client library.
 
-1. Install the Redis client library:
+Node.js
+Install the Redis client:
 
+bash
+Copy
+Edit
 npm install redis
+Example usage:
 
-2. Connect and use the client in your code:
-
+javascript
+Copy
+Edit
 import { createClient } from 'redis';
 
 async function connectToRedis() {
-  // Create a client instance
   const client = createClient();
 
-  // Handle connection errors
   client.on('error', (err) => console.log('Redis Client Error', err));
 
-  // Connect to the server
   await client.connect();
   console.log('Successfully connected to the Redis clone!');
 
-  // Set a key-value pair
   await client.set('my_app:user_123', '{"name": "Alice", "age": 25}');
   console.log('Set a new user in the cache.');
 
-  // Get the value of the key
   const user = await client.get('my_app:user_123');
   console.log('Retrieved user:', user);
 
-  // Disconnect when you're done
   await client.quit();
 }
 
 connectToRedis();
+Python
+Install the Redis client:
 
+bash
+Copy
+Edit
+pip install redis
+Example usage:
+
+python
+Copy
+Edit
+import redis
+
+def connect_to_redis():
+    r = redis.Redis(host='localhost', port=6379, db=0)
+
+    try:
+        r.ping()
+        print("Successfully connected to the Redis clone!")
+
+        r.set('my_app:user_123', '{"name": "Bob", "age": 30}')
+        print("Set a new user in the cache.")
+
+        user = r.get('my_app:user_123')
+        print("Retrieved user:", user.decode('utf-8'))
+
+    except redis.exceptions.ConnectionError as e:
+        print(f"Failed to connect to Redis: {e}")
+
+connect_to_redis()
+Java (Maven)
+Add Jedis to your pom.xml:
+
+xml
+Copy
+Edit
+<dependencies>
+    <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>4.3.1</version>
+    </dependency>
+</dependencies>
+Example usage:
+
+java
+Copy
+Edit
+import redis.clients.jedis.Jedis;
+
+public class RedisCloneClient {
+    public static void main(String[] args) {
+        Jedis jedis = new Jedis("localhost", 6379);
+
+        try {
+            jedis.ping();
+            System.out.println("Successfully connected to the Redis clone!");
+
+            jedis.set("my_app:user_456", "{\"name\": \"Charlie\", \"age\": 35}");
+            System.out.println("Set a new user in the cache.");
+
+            String user = jedis.get("my_app:user_456");
+            System.out.println("Retrieved user: " + user);
+
+        } catch (Exception e) {
+            System.err.println("Failed to connect to Redis: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+    }
+}
 ⚙️ Configuration
-The server runs on port 6379 by default. You can change this by setting the PORT environment variable before starting the server:
+The server runs on port 6379 by default.
+To change the port, set the PORT environment variable:
 
+bash
+Copy
+Edit
 PORT=7000 npm start
-
 🤝 Contributing
-This project is a great way to learn about databases and concurrency. Feel free to open issues or submit pull requests with new features or bug fixes.
-
-📄 License
-This project is licensed under the MIT License.
+This project is a great way to learn about databases and concurrency.
+Feel free to open issues or submit pull requests with new features or bug fixes.
